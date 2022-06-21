@@ -135,3 +135,90 @@ SELECT * FROM `book` ORDER BY `price` aSC LIMIT 3;
 SELECT SUM(saleprice) AS `총판매액` FROM `orders`;
 
 #문제30
+SELECT 
+	SUM(`saleprice`) AS `총판매액`,
+	AVG(`saleprice`) AS `평균값`,
+	MIN(`saleprice`) AS `최저가`,
+	MAX(`saleprice`) AS `최고가`
+FROM
+	`orders`;
+	
+#문제31
+SELECT COUNT(*) AS `판매건수`FROM `orders`;
+
+#문제32
+SELECT`bookid`, REPLACE(`bookname`,'야구','농구') AS `bookname`,
+`publisher`, `price` FROM `book`;
+
+#문제33
+SELECT `custid`,COUNT(`orderid`)AS `수량` FROM `orders` 
+WHERE `saleprice` >= 8000
+GROUP BY `custid`
+HAVING `수량`>=2;
+
+#문제34
+SELECT * FROM `customer` AS a
+JOIN `orders` AS b
+ON a.custid = b.custid
+ORDER BY a.`custid`;
+
+SELECT * FROM `customer` AS a,`orders` AS b WHERE a.custid = b.custid;
+
+#문제35
+SELECT * FROM `customer` 
+JOIN `orders`  
+USING(`custid`);
+
+#문제36
+SELECT `name`, `saleprice` FROM `customer` AS a
+JOIN `orders` AS b
+ON a.custid = b.custid
+ORDER BY a.`custid`;
+
+#문제37
+SELECT `name`, SUM(`saleprice`) FROM `orders` AS a 
+JOIN `customer` AS b
+ON a.custid = b.custid
+GROUP BY a.custid
+ORDER BY `name`;
+
+#문제38
+SELECT `name`, `bookname` FROM `customer` AS a 
+JOIN `orders` AS b ON a.custid = b.custid
+JOIN `book` AS c on b.bookid = c.bookid;
+
+#문제39
+SELECT `name`, `bookname` FROM `customer` AS a 
+JOIN `orders` AS b ON a.custid = b.custid
+JOIN `book` AS c on b.bookid = c.bookid
+WHERE `saleprice`=20000;
+
+#문제40
+SELECT `name`,`saleprice` FROM `orders` AS a
+right JOIN `customer` AS b
+ON a.custid = b.custid;
+
+#문제 41
+SELECT `bookname` FROM `book`
+WHERE `price`=(SELECT MAX(`price`) FROM `book`);
+
+#문제42
+SELECT `name` FROM `customer`
+left JOIN`orders`
+USING(`custid`)
+WHERE `orderid` IS NULL ;
+
+#문제43
+SELECT SUM(`saleprice`)AS `총매출` FROM `customer` AS a
+JOIN `orders`AS b
+ON a.custid = b.custid
+WHERE `name`='김연아';
+
+#문제44
+INSERT INTO `book`(bookname,publisher,price) VALUES('스포츠의학','한솔의학서적',NULL);
+
+#문제45
+UPDATE `customer` SET `address`='대한민국 부' where `custid`=5;
+
+#문제46
+DELETE FROM `customer` WHERE `custid`=5;
